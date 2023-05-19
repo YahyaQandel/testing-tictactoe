@@ -8,6 +8,7 @@ const Game = () => {
   const [xIsNext, setXisNext] = useState(true);
   const winner = calculateWinner(history[stepNumber]);
   const xO = xIsNext ? "X" : "O";
+  const winnerSelector = winner ? 'winner' : 'next-player';
 
   const handleClick = (i) => {
     const historyPoint = history.slice(0, stepNumber + 1);
@@ -30,9 +31,10 @@ const Game = () => {
   const renderMoves = () =>
     history.map((_step, move) => {
       const destination = move ? `Go to move #${move}` : "Go to Start";
+      const buttonSelector = move ? 'go-to-move-btn' : 'go-to-start-btn';
       return (
         <li key={move}>
-          <button onClick={() => jumpTo(move)}>{destination}</button>
+          <button onClick={() => jumpTo(move)} id={buttonSelector}>{destination}</button>
         </li>
       );
     });
@@ -45,7 +47,7 @@ const Game = () => {
             <h3>History</h3>
             {renderMoves()}
           </div>
-          <h3>{winner ? "Winner: " + winner : "Next Player: " + xO}</h3>
+          <h3 id={winnerSelector}>{winner ? "Winner: " + winner : "Next Player: " + xO}</h3>
         </div>
         <Board squares={history[stepNumber]} onClick={handleClick} />
       </div>
